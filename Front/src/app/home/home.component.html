@@ -1,0 +1,63 @@
+<div class="display" >
+     <div class="section display"><div class=""><div class=" section7 shift display"><div class="section7" style="margin-top: 145px;"> <div id="container"></div></div></div></div></div>
+    
+     
+     <div class="section2 ">
+        <div class="display">
+            <div class="prod">
+                <button (click)='play()' style="margin-top: 15px;" class="button" id="start">
+                    <img id="fill" src="/assets/photos/START.png"style=" margin-left: 10px;height: 62px;" class="creation">
+                    <p style="margin-left: 10px;">Start</p>
+                </button>
+                <input type="number" [(ngModel)]="products" style='width:65px;' placeholder="Products">
+            </div>
+            <div >
+                <button (click)='replay()' style="margin-top: 15px;" class="button" [disabled]="!repDis">
+                    <img id="fill" src="assets/photos/Replay.png"style=" margin-left: 10px;height: 62px;" class="creation">
+                    <p style="margin-left: 10px;" >Replay</p>
+                </button>
+
+            </div> 
+
+             <div>
+                    <button (click)="clear()" style="margin-top: 15px;" class="button" id="draw" >
+                        <img id="fill" src="assets/photos/new.png"style=" margin-left: 10px;height: 62px;" class="creation">
+                        <p style="margin-left: 10px;" >New</p>
+
+                    </button>
+        
+             </div>
+
+         <div class="display">
+            <div class="line" style="margin-left: 10px;">
+
+            </div>
+
+             <div>
+                <button (click)='create("Machine")' style="margin-top: 15px;" class="button" id="draw" [disabled]="playMode">
+                    <img id="fill" src="assets/photos/Machine.png"style=" margin-left: 10px;height: 62px;" class="creation">
+                <p style="margin-left: 10px;" >Machine</p>
+
+                </button>
+           </div>
+           <div> <button (click)='create("Queue")' style="margin-top: 15px;" class="button" id="draw" [disabled]="playMode">
+            <img id="fill" src="assets/photos/queue.png"style=" margin-left: 10px;height: 62px;" class="creation">
+            <p style="margin-left: 10px;" >Queue</p>
+
+        </button>
+        </div>
+        <div> <button (click)='arrowButton()'  style="margin-top: 15px;" class="button" id="arrow" [disabled]="playMode">
+            <img id="fill" src="assets/photos/line.png"style=" margin-left: 10px;height: 62px;" class="creation">
+            <p style="margin-left: 10px;" >Arrow</p>
+
+        </button>
+        </div>
+ </div>
+         
+        <div class="line " style="margin-left: 10px;">
+        
+        </div>
+ 
+    
+    
+</div>
