@@ -26,6 +26,7 @@ import { WebSocketAPI } from '../WebSocketAPI';
     repDis:boolean=false
     lastQ:any
     lastM:any
+    arrTEXT:string
     products=NaN
     operations: any = new Operation
     Selecting: any = new Selecting
@@ -106,7 +107,12 @@ import { WebSocketAPI } from '../WebSocketAPI';
             }else{
               this.shape2 = this.Selecting.selectedShapes[0]
               console.log(this.shape2.getAbsolutePosition().x+","+this.shape2.getAbsolutePosition().y)
-              let arr = new Arrow(this.layer, this.MQmap.get(this.shape1.getAttr("id"))! , this.MQmap.get(this.shape2.getAttr("id"))!)
+              if(this.arrTEXT==null){
+                this.arrTEXT="1"
+                console.log(this.arrTEXT)
+              }
+              let arr = new Arrow(this.layer, this.MQmap.get(this.shape1.getAttr("id"))! , this.MQmap.get(this.shape2.getAttr("id"))!,this.arrTEXT)
+              this.arrTEXT=""
               this.drawingArrow=false
             }
           }
@@ -215,9 +221,11 @@ import { WebSocketAPI } from '../WebSocketAPI';
     if(this.arrowMode){
       this.arrowMode=false
       document.getElementById('arrow')!.style.backgroundColor ="rgb(255, 255, 255)";
+      document.getElementById('arrTEXT')!.style.display ="none";
 
     }else{
       this.arrowMode = true
+      document.getElementById('arrTEXT')!.style.display ="block";
       document.getElementById('arrow')!.style.backgroundColor ="#777777";
 
     }
@@ -228,75 +236,6 @@ import { WebSocketAPI } from '../WebSocketAPI';
   }
  
 
-  clear()
-  {
-    
-    this.layer.removeChildren()
-    this.q=0
-    this.m=0
-    this.products=0
-    this.MQmap=new Map
-    this.http.get('http://localhost:8080/clear',{
-            responseType:'text',
-            params:{ 
-               
-            },
-            observe:'response'
-          }).subscribe(response=>{
-            console.log(response.body!)
-          })
-
-  }
- replay()
- {      
-  this.lastQ.set(0)
-  this.connect()
-  this.http.get('http://localhost:8080/replay',{
-    responseType:'text',
-    params:{ 
-       
-    },
-    observe:'response'
-  }).subscribe(response=>{
-    console.log(response.body!)
-  })
- }
-  request=new Requests(this.http)
-  play(){
-    if(!this.products){
-      console.log(this.products)
-      alert("Please enter the number of products")  
-      return
-    }else if(!this.MQmap.has("q0")||!this.MQmap.has("q1")||!this.MQmap.has("m0")){
-      alert("Please insert Machines and Queus")  
-
-    }
-    
-    
-    else{
-      if(this.playMode){
-        this.playMode=false
-        document.getElementById('start')!.style.backgroundColor ="rgb(255, 255, 255)";
-        for(let key of this.MQmap.keys()) {
-          this.MQmap.get(key)!.machineGroup.draggable(true)
-      }
-      }else{
-        this.playMode = true
-        document.getElementById('start')!.style.backgroundColor ="#777777";
-        for(let key of this.MQmap.keys()) {
-          this.MQmap.get(key)!.machineGroup.draggable(false)
-      }
-      this.repDis=false
-      console.log(this.products)
-      this.colorAssign(this.products)
-      this.lastQ.set(0)
-      this.layer.draw()
-      this.request.playRequest(this.MQmap,this.products)
-      this.connect()
-    }
-      this.Selecting.emptytr()
-    }
-  }
 
 
   constructor(public http: HttpClient){ 

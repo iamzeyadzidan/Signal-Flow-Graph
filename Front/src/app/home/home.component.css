@@ -2,13 +2,23 @@
 .display{
     display: flex;
 }
-
+.inputDiv{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    margin-left: 10px;
+}
 .section{
      width: 0px;
      background-color:gray;
      height: 1px;
 }
- 
+ .TXT{
+     width:  250px;
+ }
+ .hid{
+     display: none;
+ }
 .shift{
     margin-top: 5px;
 }

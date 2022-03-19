@@ -11,7 +11,7 @@ class Arrow{
     sh2!: Konva.Group
 
 
-    constructor(layer: Konva.Layer, shape1: Factory , shape2: Factory){
+    constructor(layer: Konva.Layer, shape1: Factory , shape2: Factory ,text: string){
         var id1 = shape1.ID
         var id2 = shape2.ID
         console.log(id1.charAt(0) == id2.charAt(0))
@@ -25,19 +25,19 @@ class Arrow{
         this.shape2 = shape2
         this.layer = layer 
         if(shape1==shape2){
-            this.arrow = this.ArrowS()
+            this.arrow = this.ArrowS(text)
             this.type="self"
         }
         else if(id1.charAt(1)>id2.charAt(1)){
-            this.arrow=this.ArrowL()
+            this.arrow=this.ArrowL(text)
             this.type="lower"
         }
         else if(shape1.out.length){
-            this.arrow=this.ArrowU()
+            this.arrow=this.ArrowU(text)
             this.type="upper"
         }
         else{
-            this.arrow=this.Arrow()
+            this.arrow=this.Arrow(text)
             this.type="normal"
         }
 
@@ -53,7 +53,7 @@ class Arrow{
 
     }
 
-    Arrow(){
+    Arrow(text:string){
         this.sh1 = this.shape1.machineGroup
         this.sh2 = this.shape2.machineGroup
         let pos = this.getShorterBath()
@@ -70,6 +70,18 @@ class Arrow{
             stroke: 'black',
             strokeWidth: 4
         });
+        shp.add(new Konva.Text({
+            x:(pos1.x+pos2.x)/2, 
+            y:((pos1.y+pos2.y)/2)-40,
+            text:text,
+            fontSize: 30,
+            fontStyle:('bold'),
+            fontFamily: 'Calibri',
+            fill: '#000',
+            padding: 5,
+            align: 'center',
+            name:"Machine"
+          }));
         shp.add(arrow)
         return shp 
 
@@ -171,7 +183,7 @@ class Arrow{
 
     }
 
-    ArrowS(){
+    ArrowS(text:string){
         this.sh1 = this.shape1.machineGroup
         this.sh2 = this.shape2.machineGroup
         let pos = this.getShorterBathS()
@@ -213,7 +225,7 @@ class Arrow{
         shp.add(new Konva.Text({
             x:pos1.x-10, 
             y:pos1.y-90,
-            text:"Hello",
+            text:text,
             fontSize: 30,
             fontStyle:('bold'),
             fontFamily: 'Calibri',
@@ -225,7 +237,7 @@ class Arrow{
         return shp 
     }
 
-    ArrowU(){
+    ArrowU(text:string){
         this.sh1 = this.shape1.machineGroup
         this.sh2 = this.shape2.machineGroup
         let pos = this.getShorterBathU()
@@ -254,7 +266,7 @@ class Arrow{
         shp.add(new Konva.Text({
             x:x-30, 
             y:pos1.y+y-40,
-            text:"Hello",
+            text:text,
             fontSize: 30,
             fontStyle:('bold'),
             fontFamily: 'Calibri',
@@ -266,7 +278,7 @@ class Arrow{
         return shp 
     }
 
-    ArrowL(){
+    ArrowL(text:string){
         this.sh1 = this.shape1.machineGroup
         this.sh2 = this.shape2.machineGroup
         let pos = this.getShorterBathL()
@@ -295,7 +307,7 @@ class Arrow{
         shp.add(new Konva.Text({
             x:x-30, 
             y:pos1.y+y,
-            text:"Hello",
+            text:text,
             fontSize: 30,
             fontStyle:('bold'),
             fontFamily: 'Calibri',
@@ -361,7 +373,12 @@ class Arrow{
         var arrow = this.arrow.getChildren(function(node){
             return node.getClassName() === 'Arrow';
          });
+         var text = this.arrow.getChildren(function(node){
+            return node.getClassName() === 'Text';
+         });
          arrow[0].setAttr("points", p) ;
+         text[0].setAttr("x",((pos1.x+pos2.x)/2))
+         text[0].setAttr("y",((pos1.y+pos2.y)/2)-40) 
         this.layer.draw();
 
     }
