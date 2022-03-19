@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { WebSocketAPI } from './WebSocketAPI';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +8,6 @@ import { WebSocketAPI } from './WebSocketAPI';
 export class AppComponent {
   title = 'angular8-springboot-websocket';
 
-  webSocketAPI: WebSocketAPI;
   greeting: any;
   name: string;
   

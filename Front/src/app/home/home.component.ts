@@ -4,13 +4,9 @@ import Operation from "./operation";
 import Arrow from "./arrow";
 
 import Selecting from "./selecting"
-import { HttpClient } from '@angular/common/http';
-import { observable } from 'rxjs';
+
 import Machine from './Machine';
-import Queue from './Queue';
 import Factory from './Factory';
-import Requests from './Request';
-import { WebSocketAPI } from '../WebSocketAPI';
 
 
 @Component({
@@ -21,16 +17,13 @@ import { WebSocketAPI } from '../WebSocketAPI';
 
   export class homecomponent implements OnInit {
     m:any
-    q:any
     b:any
     repDis:boolean=false
-    lastQ:any
     lastM:any
     arrTEXT:string
     products=NaN
     operations: any = new Operation
     Selecting: any = new Selecting
-    webSocketAPI: WebSocketAPI;
     MQmap: Map<string,Factory> = new Map
 
     stage!: Konva.Stage;
@@ -45,15 +38,9 @@ import { WebSocketAPI } from '../WebSocketAPI';
 
     color: string = 'black'
    stroke:number=3
-   contextMenu(e:any)
-   {
-     console.log(e.pageX)
-     console.log(e.pageY)
-     e.preventDefault()
-   }
+ 
 
     ngOnInit(): void {  
-      this.webSocketAPI = new WebSocketAPI(this);
       
       this.stage = new Konva.Stage({  //create the stage
         container: 'container',
@@ -112,7 +99,7 @@ import { WebSocketAPI } from '../WebSocketAPI';
                 console.log(this.arrTEXT)
               }
               let arr = new Arrow(this.layer, this.MQmap.get(this.shape1.getAttr("id"))! , this.MQmap.get(this.shape2.getAttr("id"))!,this.arrTEXT)
-              this.arrTEXT=""
+              this.arrTEXT=null
               this.drawingArrow=false
             }
           }
@@ -122,75 +109,14 @@ import { WebSocketAPI } from '../WebSocketAPI';
       
       
     }
-    connect(){
-      this.webSocketAPI._connect();
-
-    }
-
-    disconnect(){
-      this.webSocketAPI._disconnect();
-    }
+    
     /*
     sendMessage(){
       this.webSocketAPI._send(this.name);
     }
     */
-    handleMessage(message){
-      var x=JSON.parse(message)
-      var P=x.product
-      var IN=x.in
-      var OUT=x.out
-      if (IN[0]=='m'){
-        this.coloring(P,IN)
-        this.queueDec(OUT)
-      }
-      else if (IN=="q0"){
-        this.queueInc(IN)
-      }
-      
-      else{
-        for(let i ; i<this.m;i++){
-          var s="m"+i
-          if(this.MQmap.get(s)!.out.length==0){
-            alert ("please finsh each Machine with a Queue")
-          }
-        }
-        this.colorReset(OUT)
-        this.queueInc(IN)
-        if (this.lastQ.ID==IN&&this.lastQ.contain==this.products){
-          this.disconnect()
-          this.playMode=false
-          document.getElementById('start')!.style.backgroundColor ="rgb(255, 255, 255)";
-          for(let key of this.MQmap.keys()) {
-            this.MQmap.get(key)!.machineGroup.draggable(true)
-        }
-        this.repDis=true
-        }
-      }
-    }
 
     //for doing the event
-    Colormap: Map<string,string> = new Map
-    colorAssign(num:number){
-      for (let i=0 ;i<num;i++){
-      var x="p"+i
-      this.Colormap.set(x,Konva.Util.getRandomColor())
-      }
-    }
-
-    coloring(Pid:string,Mid:string){
-      this.MQmap.get(Mid)!.update(this.Colormap.get(Pid)!)
-      console.log(this.Colormap.get(Pid))
-    }
-    colorReset(Mid:string){
-      this.MQmap.get(Mid)!.update("red")
-    }
-    queueInc(Qid:string){
-      this.MQmap.get(Qid)!.update("inc")
-    }
-    queueDec(Qid:string){
-      this.MQmap.get(Qid)!.update("dec")
-    }
 
     create(name:string)
     {
@@ -204,12 +130,7 @@ import { WebSocketAPI } from '../WebSocketAPI';
           this.lastM=M
 
           break;  
-        case "Queue":
-          var Q=new Queue(this.layer,shift,this.q)
-          this.MQmap.set(Q.ID,Q)
-          this.q++;
-          this.lastQ=Q
-          break;
+
       }
       if(this.arrowMode){
         this.arrowButton()
@@ -238,8 +159,7 @@ import { WebSocketAPI } from '../WebSocketAPI';
 
 
 
-  constructor(public http: HttpClient){ 
-      this.q=0
+  constructor(){ 
       this.m=0
 
   }

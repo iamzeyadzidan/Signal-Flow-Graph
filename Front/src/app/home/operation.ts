@@ -1,4 +1,3 @@
-import { Component, OnInit } from '@angular/core';
 import Konva from 'Konva';
 
 class Operation{

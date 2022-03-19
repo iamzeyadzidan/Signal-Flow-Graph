@@ -1,6 +1,7 @@
 
 .display{
     display: flex;
+    width: auto;
 }
 .inputDiv{
     display: flex;
