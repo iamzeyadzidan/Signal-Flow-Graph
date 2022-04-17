@@ -7,6 +7,7 @@ import Selecting from "./selecting"
 
 import Machine from './Machine';
 import Factory from './Factory';
+import { Loop } from '../loop';
 
 
 @Component({
@@ -38,10 +39,9 @@ import Factory from './Factory';
 
     color: string = 'black'
    stroke:number=3
- 
 
     ngOnInit(): void {  
-      
+
       this.stage = new Konva.Stage({  //create the stage
         container: 'container',
         width: window.innerWidth,
@@ -135,7 +135,22 @@ import Factory from './Factory';
       if(this.arrowMode){
         this.arrowButton()
       }
-    
+      // let lloo=new Loop(6);
+      // var multi:number[][] = [[1,1,0,0,0,1],[0,1,1,0,0,0],[1,0,0,1,0,0],[0,0,1,0,1,1],[0,0,0,0,0,1],[1,0,0,1,1,0]]  
+      // let lloo=new Loop(4);
+      // var multi:number[][] = [[0,1,0,0],[0,1,1,0],[1,0,0,1],[0,0,1,0]] 
+      // let lloo=new Loop(8);
+      // var multi:number[][] = [
+      // [0,1,0,0,0,0,0,1],
+      // [0,0,1,0,0,0,0,0],
+      // [0,1,0,1,0,0,0,0],
+      // [0,0,1,0,1,0,0,0],
+      // [0,0,0,0,0,0,0,0],
+      // [0,0,0,0,1,0,1,0],
+      // [0,0,0,0,0,1,0,1],
+      // [0,0,0,0,0,0,1,0]]  
+      // lloo.getAllLoop(multi)
+      // console.log(lloo.loops)      
   }
 
   arrowButton(){
