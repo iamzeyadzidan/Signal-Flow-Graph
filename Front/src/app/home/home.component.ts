@@ -8,6 +8,7 @@ import Selecting from "./selecting";
 import Machine from "./Machine";
 import Factory from "./Factory";
 import { Loop } from "../loop";
+import { path } from "../Path";
 
 @Component({
   selector: "home",
@@ -139,6 +140,8 @@ export class homecomponent implements OnInit {
     // let lloo=new Loop(4);
     // var multi:number[][] = [[0,1,0,0],[0,1,1,0],[1,0,0,1],[0,0,1,0]]
     let lloo = new Loop(8);
+    let vertex = ["0", "1", "2", "3", "4", "5", "6", "7"];
+    let fPath = new path(8, ["0", "1", "2", "3", "4", "5", "6", "7"]);
     var multi: number[][] = [
       [0, 1, 0, 0, 0, 0, 0, 1],
       [0, 0, 1, 0, 0, 0, 0, 0],
@@ -149,9 +152,23 @@ export class homecomponent implements OnInit {
       [0, 0, 0, 0, 0, 1, 0, 1],
       [0, 0, 0, 0, 0, 0, 1, 0],
     ];
-    lloo.getAllLoop(multi);
-    lloo.nonTouched();
-    console.log(lloo.loops);
+    for(let i = 0; i < 8; i++)
+    {
+      for(let j = 0; j < 8; j++)
+      {
+        if(multi[i][j])
+        {
+          fPath.addEdge(vertex[i], vertex[j], "2");
+        }
+      }
+    }
+    // lloo.getAllLoop(multi);
+    // lloo.nonTouched();
+    // console.log(lloo.loops);
+    fPath.printAllPaths("0", "4");
+    let hhh = fPath.getPaths();
+    console.log(hhh);
+    console.log(fPath.getPathValue(hhh[0], false));
   }
 
   arrowButton() {
