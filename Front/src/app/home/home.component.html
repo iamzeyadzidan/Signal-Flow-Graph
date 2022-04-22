@@ -1,33 +1,87 @@
-<div class="display" >
-     <div class="section display"><div class=""><div class=" section7 shift display"><div class="section7" style="margin-top: 145px;"> <div id="container"></div></div></div></div></div>
-    
-     <div class="section2 ">
-        <div class="display">
+<div class="display">
+  <div class="section display">
+    <div class="">
+      <div class="section7 shift display">
+        <div class="section7" style="margin-top: 145px">
+          <div id="container"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section2">
     <div class="display">
+      <div class="display">
         <div class="prod">
-            <button (click)='play()' style="margin-top: 15px;" class="button" id="start">
-                <img id="fill" src="/assets/photos/START.png"style=" margin-left: 10px;height: 62px;" class="creation">
-                <p style="margin-left: 10px;">Start</p>
-            </button>
+          <button
+            (click)="play()"
+            style="margin-top: 15px"
+            class="button"
+            id="start"
+          >
+            <img
+              id="fill"
+              src="/assets/photos/START.png"
+              style="margin-left: 10px; height: 62px"
+              class="creation"
+            />
+            <p style="margin-left: 10px">Start</p>
+          </button>
         </div>
         <div>
-            <button (click)='create("Machine")' style="margin-top: 15px;" class="button" id="draw" [disabled]="playMode">
-                <img id="fill" src="assets/photos/Machine.png"style=" margin-left: 10px;height: 62px;" class="creation">
-                <p style="margin-left: 10px;" >Node</p>
-            </button>
+          <button
+            (click)="create('Machine')"
+            style="margin-top: 15px"
+            class="button"
+            id="draw"
+            [disabled]="playMode"
+          >
+            <img
+              id="fill"
+              src="assets/photos/Machine.png"
+              style="margin-left: 10px; height: 62px"
+              class="creation"
+            />
+            <p style="margin-left: 10px">Node</p>
+          </button>
         </div>
-        <div> 
-            <button (click)='arrowButton()'  style="margin-top: 15px;" class="button" id="arrow" [disabled]="playMode">
-                <img id="fill" src="assets/photos/line.png"style=" margin-left: 10px;height: 62px;" class="creation">
-                <p style="margin-left: 10px;" >Arrow</p>
-            </button>
+        <div>
+          <button
+            (click)="arrowButton()"
+            style="margin-top: 15px"
+            class="button"
+            id="arrow"
+            [disabled]="playMode"
+          >
+            <img
+              id="fill"
+              src="assets/photos/line.png"
+              style="margin-left: 10px; height: 62px"
+              class="creation"
+            />
+            <p style="margin-left: 10px">Arrow</p>
+          </button>
         </div>
-    </div>   
-    <div class="line " style="margin-left: 10px;"></div>
-    <div class="inputDiv">
-        <input type="text" name="Input" id="inpTEXT"placeholder="Enter Input Here" class="TXT">
-        <input type="text" [(ngModel)]="arrTEXT" name=[(arrTEXT)] id="arrTEXT" placeholder="Enter The Function for the arrow Here" class="TxT hid">
+      </div>
+      <div class="line" style="margin-left: 10px"></div>
+      <div class="inputDiv">
+        <input
+          type="text"
+          name="Input"
+          id="inpTEXT"
+          placeholder="Enter Input Here"
+          class="TXT"
+        />
+        <input
+          type="text"
+          [(ngModel)]="arrTEXT"
+          name="[(arrTEXT)]"
+          id="arrTEXT"
+          placeholder="Enter The Function for the arrow Here"
+          class="TxT hid"
+        />
+      </div>
+      <div class="line" style="margin-left: 10px"></div>
     </div>
-    <div class="line " style="margin-left: 10px;"></div>
-
+  </div>
 </div>
