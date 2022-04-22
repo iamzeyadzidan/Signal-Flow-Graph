@@ -4,15 +4,15 @@ export class Loop {
   visited = [];
   //place 0 mean 2 non touch place 1 mean 3
   nonTouchedloop = [[]];
-  weight = [[]];
+  // weight = [[]];
   numberOfNode: number;
   constructor(n: number) {
     this.numberOfNode = n;
     this.visited = Array(n).fill(false);
     this.finished = Array(n).fill(false);
-    this.weight = Array(n)
-      .fill(null)
-      .map(() => Array(n).fill(100000000));
+    // this.weight = Array(n)
+      // .fill(null)
+      // .map(() => Array(n).fill(100000000));
   }
   getAllLoop(graph: number[][]) {
     console.log(graph);
@@ -43,12 +43,12 @@ export class Loop {
         //     this.weight[way[i]][way[i+1]]=-1
         // }
       }
-      weight += this.weight[way[way.length - 1]][current];
-      this.weight[way[way.length - 1]][current] = -1;
+      // weight += this.weight[way[way.length - 1]][current];
+      // this.weight[way[way.length - 1]][current] = -1;
       allWay = allWay.concat(current.toString());
       // if(weight>0){
-      console.log(this.weight);
-      console.log(weight);
+      // console.log(this.weight);
+      // console.log(weight);
       this.loops.push(allWay);
       // }
       return;
@@ -138,7 +138,7 @@ export class Loop {
     }
 
     combi.sort((a, b) => a.length - b.length);
-    // console.log(combi.join("\n"));
+    console.log(combi.join("\n"));
     return combi;
   }
   nonTouched() {
