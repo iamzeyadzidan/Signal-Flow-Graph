@@ -1,4 +1,4 @@
-import { Path } from "./Path";
+import { path } from "./Path";
 import { Loop } from "./Loop";
 
 /**
@@ -16,7 +16,7 @@ import { Loop } from "./Loop";
 
 export class MasonCalculator {
   /** Paths Data */
-  pathsData: Path;
+  pathsData: path;
   paths: String[];
   pathTouchingLoops: any[][];
   /** Loops Data */
@@ -30,7 +30,7 @@ export class MasonCalculator {
   pathDeltas: Map<any, any>;
   denominatorDelta: any;
 
-  constructor(pathsData: Path, loopsData: Loop) {
+  constructor(pathsData: path, loopsData: Loop) {
     this.pathsData = pathsData;
     this.paths = pathsData.forwardPaths;
     this.loopsData = loopsData;

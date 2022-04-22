@@ -139,7 +139,6 @@ export class homecomponent implements OnInit {
     // var multi:number[][] = [[1,1,0,0,0,1],[0,1,1,0,0,0],[1,0,0,1,0,0],[0,0,1,0,1,1],[0,0,0,0,0,1],[1,0,0,1,1,0]]
     // let lloo=new Loop(4);
     // var multi:number[][] = [[0,1,0,0],[0,1,1,0],[1,0,0,1],[0,0,1,0]]
-    let lloo = new Loop(8);
     let vertex = ["0", "1", "2", "3", "4", "5", "6", "7"];
     let fPath = new path(8, ["0", "1", "2", "3", "4", "5", "6", "7"]);
     var multi: number[][] = [
