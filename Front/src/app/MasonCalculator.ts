@@ -6,12 +6,12 @@ import { Loop } from "./Loop";
  * Calculates deltas of each path and maps each path to its delta.
  * Calculates the delta of the denominator.
  * Stores forward paths, loops, non-touching loops, paths deltas, and denominator delta.
+ *
+ * The function calculates the whole mason formula.
  */
 
 /**
- * To be continued:
- * Get the weights of each path and loop through Paths class.
- * Replace weights within the getDeltaFunctions.
+ * Needs to be reviewed
  */
 
 export class MasonCalculator {
@@ -29,6 +29,10 @@ export class MasonCalculator {
   /** Deltas */
   pathDeltas: Map<any, any>;
   denominatorDelta: any;
+  /** Numerator */
+  numerator: any;
+  /** Mason Formula Result */
+  masonResult: any;
 
   constructor(pathsData: path, loopsData: Loop) {
     this.pathsData = pathsData;
@@ -36,17 +40,51 @@ export class MasonCalculator {
     this.loopsData = loopsData;
     this.loops = loopsData.loops;
     this.nonTouchingLoops = loopsData.nonTouchedloop;
+    this.setPathsWeights();
+    this.setLoopsWeights();
   }
 
-  getPathsDeltas() {
+  setPathsWeights() {
+    let path_index = 0;
+    for (path_index; path_index < this.paths.length; path_index++) {
+      let weight = this.pathsData.getPathValue(
+        this.paths[path_index].split("")
+      );
+      this.pathsWeights.set(path_index, weight);
+    }
+  }
+
+  setLoopsWeights() {
+    let loop_index = 0;
+    for (loop_index; loop_index < this.paths.length; loop_index++) {
+      // We will not use split here as a loop of loops is assumed to be array of characters.
+      let weight = this.pathsData.getPathValue(this.loops[loop_index]);
+      this.loopsWeights.set(loop_index, weight);
+    }
+  }
+
+  setPathsDeltas() {
+    /**
+     * Declaring index of a path, index of a character (or number) in a path,
+     * and index of a loop.
+     */
     let path_index = 0,
       c_index = 0,
       loop_index = 0;
+
     let flag = false; // Indicates if a loop is not touching a path.
+
+    /**
+     * Delta object is used to hold the numeric and alphanumeric parts of the result
+     */
     let delta = {
       numeric: Number(0),
       alphanumeric: String(""),
     };
+
+    /**
+     * In the following, we calculate delta for single non-path-touching loops
+     */
     for (
       path_index;
       path_index < this.paths.length;
@@ -55,6 +93,7 @@ export class MasonCalculator {
       for (loop_index; loop_index < this.loops.length; loop_index++) {
         for (c_index; c_index < this.paths[path_index].length; c_index++) {
           if (
+            // if a node in the path is a node of a loop, the loop is touching the path.
             this.loops[loop_index].includes(this.paths[path_index][c_index])
           ) {
             flag = true; // A loop touches the path
@@ -66,74 +105,117 @@ export class MasonCalculator {
          * If a loop is not touching a forward path, we add it to delta.
          * */
         if (!flag) {
-          if (isNaN(Number(this.loops[loop_index])))
-            delta.alphanumeric += " - " + this.loops[loop_index];
-          else delta.numeric -= Number(this.loops[loop_index]);
+          let weight = this.loopsWeights.get(loop_index);
+          if (isNaN(Number(weight))) delta.alphanumeric += " - " + weight;
+          else delta.numeric -= weight;
         }
       }
-      let length: number;
+
+      /**
+       * After calculating the gains of single non-path-touching loops, we do the same for
+       * all non-touching non-path-touching loops
+       */
+
+      let length: number, index: number;
       for (let i = 0; i < this.nonTouchingLoops.length; i++) {
         length = this.nonTouchingLoops[i].length;
         if (length % 2 == 0) {
           for (let j = 0; j < length; j++) {
-            if (isNaN(Number(this.nonTouchingLoops[i])))
-              delta.alphanumeric += " - " + this.nonTouchingLoops[i].toString();
-            else delta.numeric -= Number(this.nonTouchingLoops[i]);
+            if (this.loops.includes(this.nonTouchingLoops[i][j])) break; // Means one of those 2 non-touching loops is touching the forward path
+            index = this.loops.indexOf(this.nonTouchingLoops[i][j]);
+            let weight = this.loopsWeights.get(index);
+            if (isNaN(Number(weight))) delta.alphanumeric += " - " + weight;
+            else delta.numeric -= weight;
           }
         } else {
           for (let j = 0; j < length; j++) {
-            if (isNaN(Number(this.nonTouchingLoops[i])))
-              delta.alphanumeric += " + " + this.nonTouchingLoops[i].toString();
-            else delta.numeric += Number(this.nonTouchingLoops[i]);
+            if (this.loops.includes(this.nonTouchingLoops[i][j])) break; // Means one of those 2 non-touching loops is touching the forward path
+            let loop_index = this.loops.indexOf(this.nonTouchingLoops[i]);
+            let weight = this.loopsWeights.get(loop_index);
+            if (isNaN(Number(weight))) delta.alphanumeric += " + " + weight;
+            else delta.numeric += weight;
           }
         }
       }
+      delta.numeric += 1;
       this.pathDeltas.set(path_index, delta);
     }
   }
 
-  getDenominatorDelta() {
+  setNumerator() {
+    let pathIndex: number;
+
+    /**
+     * The following numerator object is the same as the previously identified delta.
+     */
+    let numerator = {
+      numeric: Number(0),
+      alphanumeric: String(""),
+    };
+
+    for (pathIndex = 0; pathIndex < this.paths.length; pathIndex++) {
+      let weight = this.pathsWeights[pathIndex];
+      let delta = this.pathDeltas.get(pathIndex);
+
+      /**
+       * If weight or delta is alphanumeric, we treat both as alphanumeric,
+       * else, we treat them as numbers.
+       */
+      if (isNaN(Number(weight))) {
+        numerator.alphanumeric += String(weight) + " * " + String(delta);
+      } else if (isNaN(Number(delta))) {
+        numerator.alphanumeric += String(weight) + " * " + String(delta);
+      } else {
+        numerator.numeric += weight * delta;
+      }
+    }
+
+    this.numerator = numerator;
+  }
+
+  setDenominatorDelta() {
     let length: number;
+
     let delta = {
       numeric: Number(0),
       alphanumeric: String(""),
     };
+
     for (let i = 0; i < this.nonTouchingLoops.length; i++) {
       length = this.nonTouchingLoops[i].length;
+
+      /**
+       * If length is even, then there is an even number loops that are non-touching and we subtract in even number,
+       * else, there is an odd number of loops that are non-touching and we add in odd number.
+       */
       if (length % 2 == 0) {
         for (let j = 0; j < length; j++) {
-          if (isNaN(Number(this.nonTouchingLoops[i])))
-            delta.alphanumeric += " - " + this.nonTouchingLoops[i].toString();
-          else delta.numeric -= Number(this.nonTouchingLoops[i]);
+          let loop_index = this.loops.indexOf(this.nonTouchingLoops[i][j]);
+          let weight = this.loopsWeights.get(loop_index);
+          if (isNaN(Number(weight))) delta.alphanumeric += " - " + weight;
+          else delta.numeric -= weight;
         }
       } else {
         for (let j = 0; j < length; j++) {
-          if (isNaN(Number(this.nonTouchingLoops[i])))
-            delta.alphanumeric += " + " + this.nonTouchingLoops[i].toString();
-          else delta.numeric += Number(this.nonTouchingLoops[i]);
+          let loop_index = this.loops.indexOf(this.nonTouchingLoops[i][j]);
+          let weight = this.loopsWeights.get(loop_index);
+          if (isNaN(Number(weight))) delta.alphanumeric += " + " + weight;
+          else delta.numeric += weight;
         }
       }
     }
+    delta.numeric += 1;
     this.denominatorDelta = delta;
   }
-  /**
-   * Left-over weight class
-   */
 
-  // weight = 0;
-  // array_weights: any[][];
-  // loops: Loop;
+  calculateUsingMasonFormula() {
+    this.setPathsDeltas();
+    this.setNumerator();
+    this.setDenominatorDelta();
 
-  // constructor(loops: Loop, array_weights: any[][]) {
-  //   this.loops = loops;
-  //   this.array_weights = array_weights;
-  // }
-  // loop_weight() {
-  //   let loop = this.loops.loops;
-  //   for (let i = 0; i < loop.length; i++) {
-  //       for (let j = 0; j < loop[i].length - 1; j++) {
-
-  //       }
-  //   }
-  // }
+    this.masonResult = {
+      numerator: this.numerator,
+      denominator: this.denominatorDelta,
+    };
+  }
 }

@@ -167,7 +167,7 @@ export class homecomponent implements OnInit {
     fPath.printAllPaths("0", "4");
     let hhh = fPath.getPaths();
     console.log(hhh);
-    console.log(fPath.getPathValue(hhh[0], false));
+    console.log(fPath.getPathValue(hhh[0]));
   }
 
   arrowButton() {
