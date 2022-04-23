@@ -8,7 +8,7 @@ import Selecting from "./selecting";
 import Machine from "./Machine";
 import Factory from "./Factory";
 import { Loop } from "../loop";
-import { path } from "../Path";
+import { path } from "../path";
 
 @Component({
   selector: "home",
