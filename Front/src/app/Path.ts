@@ -93,10 +93,13 @@ export class path
         let ans;
         let u: string;
         let v: string;
-        isNum = !isNaN(Number(this.edgesVal.get(u + v) ));
+        u = path[0];
+        v = path[1];
+        isNum = !isNaN(Number(this.edgesVal.get(u + v)));
+        // console.log("Hello" + Number(this.edgesVal.get(u + v)));
         if(isNum)
         {
-            ans = 0;
+            ans = 1;
         }
         else
         {
@@ -104,8 +107,6 @@ export class path
         }
         for(let i = 0; i < path.length - 1; i++)
         {
-            u = path[i];
-            v = path[i + 1];
             if(isNum)
             {
                 ans = ans * Number(this.edgesVal.get(u + v));
