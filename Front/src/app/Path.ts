@@ -46,6 +46,17 @@ export class path
     //     );
     //   }
     // }
+    printAllPaths(s: string,d: string)
+    {
+        let isVisited = new Map<String, boolean>();
+        for(let i = 0; i < this.v; i++)
+        {
+            isVisited.set(this.vertices[i], false);
+        }
+        let pathList = [];
+        pathList.push(s);
+        this.findAllPathsUtil(s, d, isVisited, pathList);
+    }
     findAllPathsUtil(u: string,d: string, isVisited,localPathList)
     {
         if (u == d)
