@@ -93,6 +93,7 @@ export class path
         let ans;
         let u: string;
         let v: string;
+        isNum = !isNaN(Number(this.edgesVal.get(u + v) ));
         if(isNum)
         {
             ans = 0;

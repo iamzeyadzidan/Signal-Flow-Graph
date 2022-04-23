@@ -1,4 +1,4 @@
-import { path } from "./Path";
+import { path } from "./path";
 import { Loop } from "./Loop";
 
 /**
