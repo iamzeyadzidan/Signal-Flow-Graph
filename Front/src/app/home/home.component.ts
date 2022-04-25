@@ -205,9 +205,28 @@ export class homecomponent implements OnInit {
       adj[+(this.arrowArray[i][0].slice(1))][+(this.arrowArray[i][1].slice(1))]=+this.arrowArray[i][2]
 
     }
+    console.log("Hellllllo")
     console.log(adj)
-
-
+    let vertices = []
+    for(let i = 0; i < adj[0].length; i++)
+    {
+      vertices.push(String(i))
+    }
+    let numVertices  = vertices.length
+    let fPath = new path(numVertices, vertices)
+    for(let i = 0; i < numVertices; i++)
+    {
+      for(let j = 0; j < numVertices; j++)
+      {
+        if(adj[i][j])
+        {
+          fPath.addEdge(vertices[i], vertices[j], adj[i][j])
+        }
+      }
+    }
+    fPath.printAllPaths(vertices[0], vertices[numVertices - 1])
+    //printing forward paths
+    console.log(fPath.getPaths())
   }
   constructor() {
     this.m = 0;

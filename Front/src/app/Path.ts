@@ -25,22 +25,6 @@ export class path {
     this.edgesVal.set(temp, weight);
     // console.log("GG:    " + this.edgesVal.get(temp))
   }
-  // isVisited.set(u, true);
-  // for (let i = 0; i < this.adjList.get(u).length; i++) {
-  //   if (!isVisited.get(this.adjList.get(u)[i])) {
-  //     localPathList.push(this.adjList.get(u)[i]);
-  //     this.findAllPathsUtil(
-  //       this.adjList.get(u)[i],
-  //       d,
-  //       isVisited,
-  //       localPathList
-  //     );
-  //     localPathList.splice(
-  //       localPathList.indexOf(this.adjList.get(u)[i]),
-  //       this.adjList.get(u)[i].length
-  //     );
-  //   }
-  // }
   printAllPaths(s: string, d: string) {
     let isVisited = new Map<String, boolean>();
     for (let i = 0; i < this.v; i++) {
