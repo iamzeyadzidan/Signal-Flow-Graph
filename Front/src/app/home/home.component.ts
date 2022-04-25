@@ -107,7 +107,7 @@ export class homecomponent implements OnInit {
               this.MQmap.get(this.shape2.getAttr("id"))!,
               this.arrTEXT
             );
-            this.arrowArray.push([this.shape1.getAttr("id"),this.shape2.getAttr("id")])
+            this.arrowArray.push([this.shape1.getAttr("id"),this.shape2.getAttr("id"),this.arrTEXT])
             console.log(this.arrowArray)
             console.log(this.a)
             this.arrTEXT = null;
@@ -199,10 +199,14 @@ export class homecomponent implements OnInit {
         }
     }
     for(let i =1;i<this.arrowArray.length;i++){
-      adj[+(this.arrowArray[i][0].slice(1))][+(this.arrowArray[i][1].slice(1))]=1
+      if(isNaN(+this.arrowArray[i][2]))
+      adj[+(this.arrowArray[i][0].slice(1))][+(this.arrowArray[i][1].slice(1))]=this.arrowArray[i][2]
+      else
+      adj[+(this.arrowArray[i][0].slice(1))][+(this.arrowArray[i][1].slice(1))]=+this.arrowArray[i][2]
+
     }
     console.log(adj)
-    
+
 
   }
   constructor() {
