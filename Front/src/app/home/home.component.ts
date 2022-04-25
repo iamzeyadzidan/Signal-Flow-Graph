@@ -18,6 +18,8 @@ import { path } from "../path";
 export class homecomponent implements OnInit {
   m: any;
   b: any;
+  arrowArray:string[][]
+  a:any;
   repDis: boolean = false;
   lastM: any;
   arrTEXT: string;
@@ -105,6 +107,9 @@ export class homecomponent implements OnInit {
               this.MQmap.get(this.shape2.getAttr("id"))!,
               this.arrTEXT
             );
+            this.arrowArray.push([this.shape1.getAttr("id"),this.shape2.getAttr("id")])
+            console.log(this.arrowArray)
+            console.log(this.a)
             this.arrTEXT = null;
             this.drawingArrow = false;
           }
@@ -184,8 +189,25 @@ export class homecomponent implements OnInit {
     this.drawingArrow = false;
     this.Selecting.emptytr();
   }
+  play(){
+    // var adj:number[][]=new Array(this.m).fill(new Array(this.m).fill(0));
+    var adj = [];
+    for(let i = 0; i < this.m; i++) {
+      adj[i] = [];
+        for(let j = 0; j <this.m; j++) {
+          adj[i][j] = 0;
+        }
+    }
+    for(let i =1;i<this.arrowArray.length;i++){
+      adj[+(this.arrowArray[i][0].slice(1))][+(this.arrowArray[i][1].slice(1))]=1
+    }
+    console.log(adj)
+    
 
+  }
   constructor() {
     this.m = 0;
+    this.arrowArray=[[]]
+    this.a = 0;
   }
 }
