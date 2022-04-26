@@ -142,23 +142,25 @@ export class homecomponent implements OnInit {
     }
     // let lloo=new Loop(6);
     // var multi:number[][] = [[1,1,0,0,0,1],[0,1,1,0,0,0],[1,0,0,1,0,0],[0,0,1,0,1,1],[0,0,0,0,0,1],[1,0,0,1,1,0]]
-    // let lloo=new Loop(4);
+    let lloo=new Loop();
     // var multi:number[][] = [[0,1,0,0],[0,1,1,0],[1,0,0,1],[0,0,1,0]]
     let vertex = ["0", "1", "2", "3", "4", "5", "6", "7"];
-    let fPath = new path(8, ["0", "1", "2", "3", "4", "5", "6", "7"]);
-    var multi: number[][] = [
-      [0, 1, 0, 0, 0, 0, 0, 1],
-      [0, 0, 1, 0, 0, 0, 0, 0],
-      [0, 1, 0, 1, 0, 0, 0, 0],
-      [0, 0, 1, 0, 1, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 1, 0, 1, 0],
-      [0, 0, 0, 0, 0, 1, 0, 1],
-      [0, 0, 0, 0, 0, 0, 1, 0],
-    ];
-    for(let i = 0; i < 8; i++)
+    let fPath = new path(4, ["0", "1", "2", "3" ]);
+    // var multi: number[][] = [
+    //   [0, 1, 0, 0, 0, 0, 0, 1],
+    //   [0, 0, 1, 0, 0, 0, 0, 0],
+    //   [0, 1, 0, 1, 0, 0, 0, 0],
+    //   [0, 0, 1, 0, 1, 0, 0, 0],
+    //   [0, 0, 0, 0, 0, 0, 0, 0],
+    //   [0, 0, 0, 0, 1, 0, 1, 0],
+    //   [0, 0, 0, 0, 0, 1, 0, 1],
+    //   [0, 0, 0, 0, 0, 0, 1, 0],
+    // ];
+    var multi:number[][] = [[1,1,0,0],[0,1,1,0],[0,0,0,1],[1,0,1,0]]
+
+    for(let i = 0; i < 4; i++)
     {
-      for(let j = 0; j < 8; j++)
+      for(let j = 0; j < 4; j++)
       {
         if(multi[i][j])
         {
@@ -166,10 +168,11 @@ export class homecomponent implements OnInit {
         }
       }
     }
-    // lloo.getAllLoop(multi);
-    // lloo.nonTouched();
-    // console.log(lloo.loops);
-    fPath.printAllPaths("0", "4");
+    console.log(fPath.adjList)
+    lloo.getAllLoop(fPath.adjList);
+    lloo.nonTouched();
+    console.log(lloo.loops);
+    fPath.printAllPaths("0", "3");
     let hhh = fPath.getPaths();
     console.log(hhh);
     console.log(fPath.getPathValue(hhh[0]));

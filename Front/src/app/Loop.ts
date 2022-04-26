@@ -1,125 +1,66 @@
 export class Loop {
   loops = [];
-  finished = [];
-  visited = [];
   //place 0 mean 2 non touch place 1 mean 3
   nonTouchedloop = [[]];
   // weight = [[]];
-  numberOfNode: number;
-  constructor(n: number) {
-    this.numberOfNode = n;
-    this.visited = Array(n).fill(false);
-    this.finished = Array(n).fill(false);
-    // this.weight = Array(n)
-      // .fill(null)
-      // .map(() => Array(n).fill(100000000));
+  constructor() {
   }
-  getAllLoop(graph: number[][]) {
+  //function to find all possible loops in givien graph by doing dfs 
+  //around graph
+  getAllLoop(graph:Map<string, []>) {
     console.log(graph);
-    for (let i = 0; i < this.numberOfNode; i++) {
-      if (graph[i][i] != 0) {
-        this.loops.push(i.toString());
-      }
+    let isVisited = new Map<string, boolean>();
+    let isFinished = new Map<string, boolean>();
+    for (let i of graph.keys()) {
+      isVisited.set(i, false);
+      isFinished.set(i, false);
     }
     console.log(this.loops);
-    for (let i = 0; i < this.numberOfNode; i++) {
-      if (!this.finished[i]) {
-        this.getComplexLoop(graph, i, []);
-        console.log(this.finished);
+    for (let i of graph.keys()) {
+      if (!isFinished.get(i)) {
+        this.getComplexLoop(graph, i, [],isVisited,isFinished);
+        console.log(isFinished);
       }
     }
+    this.nonTouched()
+    console.log("0                           0       "+this.loops)
   }
-  getComplexLoop(graph: number[][], current: number, way: string[]) {
+  getComplexLoop(graph:Map<String, []>, current: string, way: string[],isVisited:  Map<string, boolean>,isFinished:  Map<string, boolean>) {
     if (current.toString() == way[0]) {
       let start = way.indexOf(current.toString());
       let allWay = "";
       let weight = 0;
       for (let i = start; i < way.length; i++) {
-        // if((i+1)<way.length){
-        //     weight+=this.weight[way[i]][way[i+1]]
-        // }
         allWay = allWay.concat(way[i]);
-        // if((i+1)<way.length){
-        //     this.weight[way[i]][way[i+1]]=-1
-        // }
       }
-      // weight += this.weight[way[way.length - 1]][current];
-      // this.weight[way[way.length - 1]][current] = -1;
       allWay = allWay.concat(current.toString());
-      // if(weight>0){
-      // console.log(this.weight);
-      // console.log(weight);
       this.loops.push(allWay);
-      // }
       return;
     }
-    if (this.visited[current]) {
+    if (isVisited.get(current)) {
       return;
     }
-    this.visited[current] = true;
+    isVisited.set(current,true)
     way.push(current.toString());
-    for (let i = 0; i < this.numberOfNode; i++) {
-      if (current == i) {
-        continue;
+    for (let i of graph.get(current)) {
+      if (current == i&&i==way[0]) {
+        this.loops.push(current)
       } else {
-        if (graph[current][i] != 0) {
-          if (this.finished[i]) {
+          if (isFinished.get(i)) {
             continue;
           }
-          this.getComplexLoop(graph, i, way);
-        }
+          this.getComplexLoop(graph, i, way,isVisited,isFinished);
       }
     }
-    this.visited[current] = false;
+    isVisited.set(current, false);
     way.pop();
     if (way.length == 0) {
-      this.finished[current] = true;
-      //             for(let i=0;i<this.numberOfNode;i++){
-      //     graph[i][current]=0;
-      // }
+      isFinished.set(current, true);
     }
   }
-  // getNonTouchedLoop(graph:number[][]){
-  //     //make all loops non touching
-  //     let noneTouched=[]
-  //     for(let i=0;i<this.loops.length;i++){
-  //         noneTouched[i]=[]
-  //         for(let j=0;j<this.loops.length;j++){
-  //             if(i!=j){
-  //                 noneTouched[i].push(j)
-  //             }
-  //         }
-  //     }
-  //     let path = new Map<number, number[]>();
-  // for(let i=0;i<graph.length;i++){
-  //     for(let j=0;j<this.loops.length;j++){
-  //         if(this.loops[j].includes(i)){
-  //             if(!path.has(i)){
-  //                 path.set(i,[]);
-  //             }
-  //             path.get(i).push(j);
-  //         }
-  //     }
-  // }
-  // for(let k of path.keys()){
-  //     let pathsThrowNode=path.get(k)
-  //     for(let j of pathsThrowNode){
-  //         for(let i of pathsThrowNode){
-  //             if(j!=i){
-  //                 var itemToRemove = i;
-  //                 var index = noneTouched[j].indexOf(itemToRemove);
-  //                 console.log(index)
-  //                 console.log(i+" willll "+j)
-  //                 console.log(pathsThrowNode)
-  //                 var removedItems = noneTouched[j].splice(index, 1);
-  //                 console.log(removedItems+ " is removed ")
-  //             }
-  //         }
-  //     }
-  // }
-  // console.log(path)
-  //     console.log(noneTouched)
-  // }
+  /*
+  that function find every possible combination
+  */
   getCombinations(valuesArray: String[]) {
     var combi = [];
     var temp = [];
@@ -150,14 +91,20 @@ export class Loop {
       //map to map each key to value and check if it exist or not if exist then there atleast two non touched loops
       // and remove it from all comination
       let path = [];
-      // for(let j=0;j<allPossibleCombination[i].length;j++){
       console.log(allPossibleCombination[i]);
       console.log(allPossibleCombination.length);
       for (let j of allPossibleCombination[i]) {
         console.log(j);
-        //flag to  check if loop
+        //flag to  check if loop neded 
         let flag = false;
-        for (let k = 0; k < (<string>j).length - 1; k++) {
+        /*
+        add all nodes to combination 
+        if loop only existance once then the two loops not touched
+        */ 
+        for (let k = 0; k < (<string>j).length ; k++) {
+          if(k==j.length-1&&j.length!=1){
+            continue;
+          }
           console.log(path);
           console.log((<string>j).charAt(k));
 
@@ -176,6 +123,9 @@ export class Loop {
         }
       }
     }
-    console.log(allPossibleCombination);
+    console.log("alllllllllllllllll ")
+    this.nonTouchedloop=allPossibleCombination
+    console.log(this.nonTouchedloop );
+    return allPossibleCombination
   }
 }
