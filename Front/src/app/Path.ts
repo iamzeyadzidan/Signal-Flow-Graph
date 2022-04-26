@@ -1,3 +1,5 @@
+import { isString } from "util";
+
 export class path {
   v: number;
   adjList: any;
@@ -68,6 +70,12 @@ export class path {
     let ans;
     let u: string;
     let v: string;
+    // if(isString(path))
+    // {
+    //   let temp = path + path;
+    //   console.log("!!!!!!" + temp)
+    //   return Number(this.edgesVal(u + v))
+    // }
     u = path[0];
     v = path[1];
     let isNum = !isNaN(Number(this.edgesVal.get(u + v)));
