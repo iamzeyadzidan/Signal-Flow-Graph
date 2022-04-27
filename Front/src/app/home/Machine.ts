@@ -9,7 +9,7 @@ class Machine implements Factory {
   ID!: string;
   inn: string[] = [];
   out: string[] = [];
-  color = "red";
+  color = "cyan";
 
   constructor(layer: Konva.Layer, shift: number, m: number) {
     this.layer = layer;
