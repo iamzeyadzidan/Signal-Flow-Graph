@@ -85,7 +85,9 @@ export class MasonCalculator {
       numeric: Number(0),
       alphanumeric: String(""),
       toString() {
-        return this.numeric.toString() + " + " + this.alphanumeric.toString();
+        if (this.alphanumeric === "") return this.numeric.toString();
+        else
+          return this.numeric.toString() + " + " + this.alphanumeric.toString();
       },
     };
 
@@ -159,7 +161,9 @@ export class MasonCalculator {
       numeric: Number(0),
       alphanumeric: String(""),
       toString() {
-        return this.numeric.toString() + " + " + this.alphanumeric.toString();
+        if (this.alphanumeric === "") return this.numeric.toString();
+        else
+          return this.numeric.toString() + " + " + this.alphanumeric.toString();
       },
     };
 
@@ -195,7 +199,9 @@ export class MasonCalculator {
       numeric: Number(0),
       alphanumeric: String(""),
       toString() {
-        return this.numeric.toString() + " + " + this.alphanumeric.toString();
+        if (this.alphanumeric === "") return this.numeric.toString();
+        else
+          return this.numeric.toString() + " + " + this.alphanumeric.toString();
       },
     };
 
@@ -247,7 +253,15 @@ export class MasonCalculator {
       numerator: this.numerator,
       denominator: this.denominatorDelta,
       toString() {
-        this.numerator.toString() + " + " + this.denominator.toString();
+        return (
+          "(" +
+          this.numerator.toString() +
+          ")" +
+          " / " +
+          "(" +
+          this.denominator.toString() +
+          ")"
+        );
       },
     };
   }

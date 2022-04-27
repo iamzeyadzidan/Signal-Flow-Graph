@@ -236,7 +236,7 @@ export class homecomponent implements OnInit {
     console.log(forwardPaths)
     let masonCalculator = new MasonCalculator(fPath, loops)
     masonCalculator.calculateUsingMasonFormula();
-    console.log("Result = " + masonCalculator.masonResult);
+    console.log("Result = " + masonCalculator.masonResult.toString());
     let result = "Forward Paths:\n"
     for(let i = 0; i < forwardPaths.length; i++)
     {
