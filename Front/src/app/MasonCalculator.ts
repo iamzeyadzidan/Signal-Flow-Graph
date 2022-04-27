@@ -17,7 +17,7 @@ import { Loop } from "./Loop";
 export class MasonCalculator {
   /** Paths Data */
   pathsData: path;
-  paths: String[];
+  paths: any[][];
   pathTouchingLoops: any[][];
   /** Loops Data */
   loopsData: Loop;
@@ -47,9 +47,7 @@ export class MasonCalculator {
   setPathsWeights() {
     let path_index = 0;
     for (path_index; path_index < this.paths.length; path_index++) {
-      let weight = this.pathsData.getPathValue(
-        this.paths[path_index].split("")
-      );
+      let weight = this.pathsData.getPathValue(this.paths[path_index]);
       this.pathsWeights.set(path_index, weight);
     }
   }
@@ -57,7 +55,6 @@ export class MasonCalculator {
   setLoopsWeights() {
     let loop_index = 0;
     for (loop_index; loop_index < this.paths.length; loop_index++) {
-      // We will not use split here as a loop of loops is assumed to be array of characters.
       let weight = this.pathsData.getPathValue(this.loops[loop_index]);
       this.loopsWeights.set(loop_index, weight);
     }
@@ -124,16 +121,16 @@ export class MasonCalculator {
             if (this.loops.includes(this.nonTouchingLoops[i][j])) break; // Means one of those 2 non-touching loops is touching the forward path
             index = this.loops.indexOf(this.nonTouchingLoops[i][j]);
             let weight = this.loopsWeights.get(index);
-            if (isNaN(Number(weight))) delta.alphanumeric += " - " + weight;
-            else delta.numeric -= weight;
+            if (isNaN(Number(weight))) delta.alphanumeric += " + " + weight;
+            else delta.numeric += weight;
           }
         } else {
           for (let j = 0; j < length; j++) {
             if (this.loops.includes(this.nonTouchingLoops[i][j])) break; // Means one of those 2 non-touching loops is touching the forward path
             let loop_index = this.loops.indexOf(this.nonTouchingLoops[i]);
             let weight = this.loopsWeights.get(loop_index);
-            if (isNaN(Number(weight))) delta.alphanumeric += " + " + weight;
-            else delta.numeric += weight;
+            if (isNaN(Number(weight))) delta.alphanumeric += " - " + weight;
+            else delta.numeric -= weight;
           }
         }
       }
@@ -181,6 +178,12 @@ export class MasonCalculator {
       alphanumeric: String(""),
     };
 
+    for (let loop_index = 0; loop_index < this.loops.length; loop_index++) {
+      let weight = this.loopsWeights.get(loop_index);
+      if (isNaN(Number(weight))) delta.alphanumeric += " - " + weight;
+      else delta.numeric -= weight;
+    }
+
     for (let i = 0; i < this.nonTouchingLoops.length; i++) {
       length = this.nonTouchingLoops[i].length;
 
@@ -192,15 +195,15 @@ export class MasonCalculator {
         for (let j = 0; j < length; j++) {
           let loop_index = this.loops.indexOf(this.nonTouchingLoops[i][j]);
           let weight = this.loopsWeights.get(loop_index);
-          if (isNaN(Number(weight))) delta.alphanumeric += " - " + weight;
-          else delta.numeric -= weight;
+          if (isNaN(Number(weight))) delta.alphanumeric += " + " + weight;
+          else delta.numeric += weight;
         }
       } else {
         for (let j = 0; j < length; j++) {
           let loop_index = this.loops.indexOf(this.nonTouchingLoops[i][j]);
           let weight = this.loopsWeights.get(loop_index);
-          if (isNaN(Number(weight))) delta.alphanumeric += " + " + weight;
-          else delta.numeric += weight;
+          if (isNaN(Number(weight))) delta.alphanumeric += " - " + weight;
+          else delta.numeric -= weight;
         }
       }
     }
