@@ -193,7 +193,7 @@ export class MasonCalculator {
         if (this.alphanumeric === "") return this.numeric.toString();
         else
           return (
-            this.numeric.toString() + "(" + this.alphanumeric.toString() + ")"
+            this.numeric.toString() + " + " + "(" + this.alphanumeric.toString() + ")"
           );
       },
     };
