@@ -10,10 +10,6 @@ import { Loop } from "./Loop";
  * The function calculates the whole mason formula.
  */
 
-/**
- * Needs to be reviewed
- */
-
 export class MasonCalculator {
   /** Paths Data */
   pathsData: path;
@@ -51,7 +47,6 @@ export class MasonCalculator {
       let weight = this.pathsData.getPathValue(this.paths[path_index]);
       this.pathsWeights.set(path_index, weight);
     }
-    console.warn(this.pathsWeights);
   }
 
   setLoopsWeights() {
@@ -61,7 +56,6 @@ export class MasonCalculator {
       let weight = this.pathsData.getPathValue(this.loops[loop_index]);
       this.loopsWeights.set(loop_index, weight);
     }
-    console.warn(this.loopsWeights);
   }
 
   setPathsDeltas() {
@@ -85,7 +79,9 @@ export class MasonCalculator {
       numeric: Number(0),
       alphanumeric: String(""),
       toString() {
-        return this.numeric.toString() + " + " + this.alphanumeric.toString();
+        if (this.alphanumeric === "") return this.numeric.toString();
+        else
+          return this.numeric.toString() + " + " + this.alphanumeric.toString();
       },
     };
 
@@ -159,7 +155,9 @@ export class MasonCalculator {
       numeric: Number(0),
       alphanumeric: String(""),
       toString() {
-        return this.numeric.toString() + " + " + this.alphanumeric.toString();
+        if (this.alphanumeric === "") return this.numeric.toString();
+        else
+          return this.numeric.toString() + " + " + this.alphanumeric.toString();
       },
     };
 
@@ -171,9 +169,6 @@ export class MasonCalculator {
        * If weight or delta is alphanumeric, we treat both as alphanumeric,
        * else, we treat them as numbers.
        */
-      console.warn(
-        "weight = " + weight.toString() + " delta = " + delta.toString()
-      );
       // alphanum exists or not
       if (isNaN(Number(weight))) {
         numerator.numeric += delta.numeric;
@@ -195,11 +190,11 @@ export class MasonCalculator {
       numeric: Number(0),
       alphanumeric: String(""),
       toString() {
-        return this.numeric.toString() + " + " + this.alphanumeric.toString();
+        if (this.alphanumeric === "") return this.numeric.toString();
+        else
+          return this.numeric.toString() + " + " + this.alphanumeric.toString();
       },
     };
-
-    console.warn(this.loopsWeights);
 
     for (let loop_index = 0; loop_index < this.loops.length; loop_index++) {
       let weight = this.loopsWeights.get(loop_index);
@@ -239,15 +234,19 @@ export class MasonCalculator {
     this.setNumerator();
     this.setDenominatorDelta();
 
-    console.log(this.pathDeltas);
-    console.log(this.numerator);
-    console.log(this.denominatorDelta);
-
     this.masonResult = {
       numerator: this.numerator,
       denominator: this.denominatorDelta,
       toString() {
-        this.numerator.toString() + " + " + this.denominator.toString();
+        return (
+          "(" +
+          this.numerator.toString() +
+          ")" +
+          " / " +
+          "(" +
+          this.denominator.toString() +
+          ")"
+        );
       },
     };
   }
