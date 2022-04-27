@@ -1,6 +1,3 @@
-import { parseHostBindings } from "@angular/compiler";
-import { isString } from "util";
-
 export class path {
   v: number;
   adjList: any;
@@ -18,15 +15,12 @@ export class path {
     this.adjList = new Map<String, String[]>();
     for (let i = 0; i < this.v; i++) {
       this.adjList.set(this.vertices[i], []);
-      // console.log("EEEEE   " + this.vertices[i])
     }
-    // console.log("Hoooo:   " + this.adjList.keys());
   }
   addEdge(u: string, v: string, weight: String) {
     this.adjList.get(u).push(v);
     let temp = u.concat(v);
     this.edgesVal.set(temp, weight);
-    // console.log("GG:    " + this.edgesVal.get(temp))
   }
   printAllPaths(s: string, d: string) {
     let isVisited = new Map<String, boolean>();
@@ -44,14 +38,11 @@ export class path {
         h.push(localPathList[i]);
       }
       this.forwardPaths.push(h);
-      console.log("found");
-      // console.log(this.adjList)
       return;
     }
     isVisited.set(u, true);
     for (let i = 0; i < this.adjList.get(u).length; i++) {
       if (!isVisited.get(this.adjList.get(u)[i])) {
-        // console.log("hiiii:   "+ u +"  TO "+this.adjList.get(u)[i])
         localPathList.push(this.adjList.get(u)[i]);
         this.findAllPathsUtil(
           this.adjList.get(u)[i],
@@ -71,22 +62,13 @@ export class path {
     let ans;
     let u: string;
     let v: string;
-    // if(isString(path))
-    // {
-    //   let temp = path + path;
-    //   console.log("!!!!!!" + temp)
-    //   return Number(this.edgesVal(u + v))
-    // }
-    if(path.length == 1)
-    {
+    if (path.length == 1) {
       let temp = path[0] + path[0];
-      console.log("!!!!!!" + temp);
-      return Number(this.edgesVal.get(temp)); 
+      return Number(this.edgesVal.get(temp));
     }
     u = path[0];
     v = path[1];
     let isNum = !isNaN(Number(this.edgesVal.get(u + v)));
-    // console.log("Hello" + Number(this.edgesVal.get(u + v)));
     if (isNum) {
       ans = 1;
     } else {
