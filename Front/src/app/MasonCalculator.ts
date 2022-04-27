@@ -239,10 +239,6 @@ export class MasonCalculator {
     this.setNumerator();
     this.setDenominatorDelta();
 
-    console.log(this.pathDeltas);
-    console.log(this.numerator);
-    console.log(this.denominatorDelta);
-
     this.masonResult = {
       numerator: this.numerator,
       denominator: this.denominatorDelta,
