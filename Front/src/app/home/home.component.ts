@@ -177,6 +177,8 @@ export class homecomponent implements OnInit {
     let hhh = fPath.getPaths();
     console.log(hhh);
     console.log(fPath.getPathValue(hhh[0]));
+    alert("hi")
+    alert("wwwwwwaefffeeeeEFaaaaaaaaaaaaaaaaa\neaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\nawwwwwwwwwwwwwwwwwwwwwwwwww\nawrrrrrrrrrrrrrrr\narrrrrrrrrrrrrrrrr")
   }
 
   arrowButton() {
