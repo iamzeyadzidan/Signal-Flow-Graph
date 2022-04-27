@@ -86,7 +86,7 @@ export class path {
         ans = ans * Number(this.edgesVal.get(u + v));
       } else {
         if (i != path.length - 2) {
-          ans = ans + this.edgesVal.get(u + v) + " * ";
+          ans = ans + "("+ this.edgesVal.get(u + v) + ")" + " * ";
         } else {
           ans = ans + this.edgesVal.get(u + v);
         }
