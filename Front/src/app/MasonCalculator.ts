@@ -80,8 +80,7 @@ export class MasonCalculator {
       alphanumeric: String(""),
       toString() {
         if (this.alphanumeric === "") return this.numeric.toString();
-        else
-          return this.numeric.toString() + " + " + this.alphanumeric.toString();
+        else return "(" + this.alphanumeric.toString() + ")";
       },
     };
 
@@ -156,8 +155,7 @@ export class MasonCalculator {
       alphanumeric: String(""),
       toString() {
         if (this.alphanumeric === "") return this.numeric.toString();
-        else
-          return this.numeric.toString() + " + " + this.alphanumeric.toString();
+        else return "(" + this.alphanumeric.toString() + ")";
       },
     };
 
@@ -169,11 +167,14 @@ export class MasonCalculator {
        * If weight or delta is alphanumeric, we treat both as alphanumeric,
        * else, we treat them as numbers.
        */
-      // alphanum exists or not
       if (isNaN(Number(weight))) {
         numerator.numeric += delta.numeric;
         numerator.alphanumeric +=
-          weight + " * " + " * " + delta.alphanumeric.toString();
+          weight +
+          " * " +
+          numerator.numeric.toString() +
+          " * " +
+          delta.alphanumeric.toString();
       } else {
         numerator.numeric += weight * delta.numeric;
         numerator.alphanumeric += delta.alphanumeric;
@@ -192,7 +193,13 @@ export class MasonCalculator {
       toString() {
         if (this.alphanumeric === "") return this.numeric.toString();
         else
-          return this.numeric.toString() + " + " + this.alphanumeric.toString();
+          return (
+            this.numeric.toString() +
+            " + " +
+            "(" +
+            this.alphanumeric.toString() +
+            ")"
+          );
       },
     };
 
