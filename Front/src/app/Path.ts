@@ -4,11 +4,13 @@ export class path {
   vertices: any;
   forwardPaths: any;
   edgesVal: any;
+  isNum: boolean;
   constructor(n: number, vList: String[]) {
     this.v = n;
     this.vertices = vList;
     this.edgesVal = new Map<String, String>();
     this.forwardPaths = [];
+    this.isNum = true;
     this.initAdjList();
   }
   initAdjList() {
@@ -20,6 +22,10 @@ export class path {
   addEdge(u: string, v: string, weight: String) {
     this.adjList.get(u).push(v);
     let temp = u.concat(v);
+    if(this.isNum && isNaN(Number(weight)))
+    {
+      this.isNum = false;
+    }
     this.edgesVal.set(temp, weight);
   }
   printAllPaths(s: string, d: string) {
@@ -68,8 +74,7 @@ export class path {
     }
     u = path[0];
     v = path[1];
-    let isNum = !isNaN(Number(this.edgesVal.get(u + v)));
-    if (isNum) {
+    if (this.isNum) {
       ans = 1;
     } else {
       ans = "";
@@ -77,7 +82,7 @@ export class path {
     for (let i = 0; i < path.length - 1; i++) {
       u = path[i];
       v = path[i + 1];
-      if (isNum) {
+      if (this.isNum) {
         ans = ans * Number(this.edgesVal.get(u + v));
       } else {
         if (i != path.length - 2) {
