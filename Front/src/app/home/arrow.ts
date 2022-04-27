@@ -18,8 +18,6 @@ class Arrow {
   ) {
     var id1 = shape1.ID;
     var id2 = shape2.ID;
-    console.log(id1.charAt(0) == id2.charAt(0));
-    console.log(shape1.inn.find((x) => x == id2));
     if (shape1.out.find((x) => x == id2) != undefined) {
       alert("Invalid Arrow");
       return;
@@ -50,7 +48,6 @@ class Arrow {
 
     shape1.arrows.push(this);
     shape2.arrows.push(this);
-    console.log(shape1.out);
   }
 
   Arrow(text: string) {
@@ -60,7 +57,6 @@ class Arrow {
     let pos1 = pos[0];
     let pos2 = pos[1];
 
-    console.log(this.sh1, this.sh2);
     var shp = new Konva.Group({});
     var arrow = new Konva.Arrow({
       points: [pos1.x, pos1.y, pos2.x, pos2.y],
@@ -190,7 +186,6 @@ class Arrow {
     this.sh2 = this.shape2.machineGroup;
     let pos = this.getShorterBathS();
     let pos1 = pos[0];
-    console.log(this.sh1, this.sh2);
     var shp = new Konva.Group({});
     shp.add(
       new Konva.Line({
@@ -257,7 +252,6 @@ class Arrow {
     let pos2 = pos[1];
     let x = (pos1.x + pos2.x) / 2;
     let y = -100;
-    console.log(this.sh1, this.sh2);
     var shp = new Konva.Group({});
     shp.add(
       new Konva.Arrow({
@@ -304,7 +298,6 @@ class Arrow {
     let pos2 = pos[1];
     let x = (pos1.x + pos2.x) / 2;
     let y = 100;
-    console.log(this.sh1, this.sh2);
     var shp = new Konva.Group({});
     shp.add(
       new Konva.Arrow({
@@ -345,7 +338,6 @@ class Arrow {
 
   public updateU() {
     let pos = this.getShorterBathU();
-    console.log("mawhoom");
     let pos1 = pos[0];
     let pos2 = pos[1];
     var p1 = [pos1.x, pos1.y, (pos1.x + pos2.x) / 2, pos1.y - 100];
@@ -367,7 +359,6 @@ class Arrow {
   }
   public updateL() {
     let pos = this.getShorterBathL();
-    console.log("mawhoom");
     let pos1 = pos[0];
     let pos2 = pos[1];
     var p1 = [pos1.x, pos1.y, (pos1.x + pos2.x) / 2, pos1.y + 100];
@@ -390,7 +381,6 @@ class Arrow {
 
   public updateN() {
     let pos = this.getShorterBath();
-    console.log(pos[0].x + "," + pos[0].y + "    " + pos[1].x + "," + pos[1].y);
     let pos1 = pos[0];
     let pos2 = pos[1];
     var p = [pos1.x, pos1.y, pos2.x, pos2.y];
@@ -407,7 +397,6 @@ class Arrow {
   }
   public updateS() {
     let pos = this.getShorterBathS();
-    console.log("mawhoom");
     let pos1 = pos[0];
     let pos2 = pos[1];
     var p1 = [pos1.x, pos1.y, pos1.x - 20, pos1.y - 20];

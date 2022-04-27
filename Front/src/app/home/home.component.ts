@@ -84,23 +84,11 @@ export class homecomponent implements OnInit {
         if (this.Selecting.selectedShapes.length != 0) {
           if (!this.drawingArrow) {
             this.shape1 = this.Selecting.selectedShapes[0];
-            console.log(
-              this.shape1.getAbsolutePosition().x +
-                "," +
-                this.shape1.getAbsolutePosition().y
-            );
-
             this.drawingArrow = true;
           } else {
             this.shape2 = this.Selecting.selectedShapes[0];
-            console.log(
-              this.shape2.getAbsolutePosition().x +
-                "," +
-                this.shape2.getAbsolutePosition().y
-            );
             if (this.arrTEXT == null) {
               this.arrTEXT = "1";
-              console.log(this.arrTEXT);
             }
             let arr = new Arrow(
               this.layer,
@@ -113,8 +101,6 @@ export class homecomponent implements OnInit {
               this.shape2.getAttr("id"),
               this.arrTEXT,
             ]);
-            console.log(this.arrowArray);
-            console.log(this.a);
             this.arrTEXT = null;
             this.drawingArrow = false;
           }
@@ -175,14 +161,10 @@ export class homecomponent implements OnInit {
         }
       }
     }
-    console.log(fPath.adjList);
     lloo.getAllLoop(fPath.adjList);
     lloo.nonTouched();
-    console.log(lloo.nonTouchedloop);
     // fPath.printAllPaths("0", "3");
     // let hhh = fPath.getPaths();
-    // console.log(hhh);
-    // console.log(fPath.getPathValue(hhh[0]));
   }
 
   arrowButton() {
@@ -216,8 +198,6 @@ export class homecomponent implements OnInit {
         adj[+this.arrowArray[i][0].slice(1)][+this.arrowArray[i][1].slice(1)] =
           +this.arrowArray[i][2];
     }
-    console.log("Hellllllo");
-    console.log(adj);
     let vertices = [];
     for (let i = 0; i < adj[0].length; i++) {
       vertices.push(String(i));
@@ -236,7 +216,6 @@ export class homecomponent implements OnInit {
     loops.getAllLoop(fPath.adjList);
 
     let forwardPaths = fPath.getPaths();
-    console.log(forwardPaths);
     let masonCalculator = new MasonCalculator(fPath, loops);
     masonCalculator.calculateUsingMasonFormula();
     let result = "Forward Paths:\n";
@@ -252,7 +231,6 @@ export class homecomponent implements OnInit {
     }
     result = result + "\nLoops:\n";
     let loopToBePrinted = loops.loops;
-    console.log(loopToBePrinted);
     for (let i = 0; i < loopToBePrinted.length; i++) {
       let temp =
         "Loop " +
@@ -265,7 +243,6 @@ export class homecomponent implements OnInit {
     }
     result = result + "\nNon-Touching Loops:\n";
     let nonTouchedToBePrinted = loops.nonTouchedloop;
-    console.log(loopToBePrinted);
     for (let i = 0; i < nonTouchedToBePrinted.length; i++) {
       let tempArr = nonTouchedToBePrinted[i];
       result = result + "Non-Touched Set of Loops " + String(i + 1) + ": {";

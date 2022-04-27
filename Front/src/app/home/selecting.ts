@@ -69,32 +69,26 @@ class Selecting {
     );
     this.tr.nodes(select);
     //this.selectedShapes = select
-    console.log(this.selectedShapes.length);
   }
 
   click(e: any, stage: Konva.Stage, layer: Konva.Layer) {
     if (this.selected.visible()) {
-      console.log("a");
       return;
     }
     if (e.target === stage) {
-      console.log("b");
 
       this.emptytr();
       return;
     }
     if (e.target.hasName("Machine")) {
       var group = e.target.findAncestor(".Machine");
-      console.log("ss");
     } else if (e.target.hasName("Queue")) {
       var group = e.target.findAncestor(".Queue");
     } else {
       return;
     }
-    console.log(group.getAttr("id"));
     /*
           if (!group.hasName('Machine') && !group.hasName('Queue')) {
-            console.log("c")
             return;
           }
           */
@@ -102,29 +96,21 @@ class Selecting {
     var shape = group.findOne((node: Konva.Node) => {
       return node.getType() === "Shape";
     });
-    console.log(shape);
 
     const metaPressed = e.evt.shiftKey || e.evt.ctrlKey || e.evt.metaKey;
     const isSelected = this.tr.nodes().indexOf(shape) >= 0;
     if (!metaPressed && !isSelected) {
       this.tr.nodes([shape]);
-      console.log("aa");
     } else if (metaPressed && isSelected) {
       const nodes = this.tr.nodes().slice();
       nodes.splice(nodes.indexOf(shape), 1);
       this.tr.nodes(nodes);
-      console.log("bb");
     } else if (metaPressed && !isSelected) {
       const nodes = this.tr.nodes().concat([shape]);
       this.tr.nodes(nodes);
-      console.log("cc");
     }
     this.selectedShapes = [group];
 
-    console.log(this.tr.visible());
-    console.log(this.tr);
-    console.log(this.selected);
-    console.log(e.target);
     layer.add(this.tr);
     layer.add(this.selected);
     layer.draw();
