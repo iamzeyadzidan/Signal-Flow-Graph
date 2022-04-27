@@ -81,7 +81,7 @@ export class path {
     {
       let temp = path[0] + path[0];
       console.log("!!!!!!" + temp);
-      return Number(this.edgesVal(temp)); 
+      return Number(this.edgesVal.get(temp)); 
     }
     u = path[0];
     v = path[1];
