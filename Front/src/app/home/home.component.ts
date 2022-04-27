@@ -234,11 +234,18 @@ export class homecomponent implements OnInit {
     let loops =new Loop()
     loops.getAllLoop(fPath.adjList)
     //printing forward paths
-    console.log(fPath.getPaths())
-
+    let forwardPaths = fPath.getPaths();
+    console.log(forwardPaths)
     let masonCalculator = new MasonCalculator(fPath, loops)
     masonCalculator.calculateUsingMasonFormula();
     console.log("Result = " + masonCalculator.masonResult);
+    let result = "Forward Paths:\n"
+    for(let i = 0; i < forwardPaths.length; i++)
+    {
+      let temp = "path " + String(i - 1) + ": {" + forwardPaths[i].join(", ")+ "} its weigth = " + String(fPath.getPathValue(forwardPaths[i]))
+      result += "\t" + temp + "\n"
+    }
+    console.log(result)
   }
   constructor() {
     this.m = 0;
