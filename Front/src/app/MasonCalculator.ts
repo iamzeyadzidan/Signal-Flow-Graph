@@ -51,7 +51,6 @@ export class MasonCalculator {
       let weight = this.pathsData.getPathValue(this.paths[path_index]);
       this.pathsWeights.set(path_index, weight);
     }
-    console.warn(this.pathsWeights);
   }
 
   setLoopsWeights() {
@@ -175,9 +174,6 @@ export class MasonCalculator {
        * If weight or delta is alphanumeric, we treat both as alphanumeric,
        * else, we treat them as numbers.
        */
-      console.warn(
-        "weight = " + weight.toString() + " delta = " + delta.toString()
-      );
       // alphanum exists or not
       if (isNaN(Number(weight))) {
         numerator.numeric += delta.numeric;
@@ -204,8 +200,6 @@ export class MasonCalculator {
           return this.numeric.toString() + " + " + this.alphanumeric.toString();
       },
     };
-
-    console.warn(this.loopsWeights);
 
     for (let loop_index = 0; loop_index < this.loops.length; loop_index++) {
       let weight = this.loopsWeights.get(loop_index);
