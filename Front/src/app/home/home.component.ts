@@ -177,8 +177,6 @@ export class homecomponent implements OnInit {
     let hhh = fPath.getPaths();
     console.log(hhh);
     console.log(fPath.getPathValue(hhh[0]));
-    alert("hi")
-    alert("wwwwwwaefffeeeeEFaaaaaaaaaaaaaaaaa\neaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\nawwwwwwwwwwwwwwwwwwwwwwwwww\nawrrrrrrrrrrrrrrr\narrrrrrrrrrrrrrrrr")
   }
 
   arrowButton() {
@@ -233,7 +231,7 @@ export class homecomponent implements OnInit {
     fPath.printAllPaths(vertices[0], vertices[numVertices - 1])
     let loops =new Loop()
     loops.getAllLoop(fPath.adjList)
-    //printing forward paths
+
     let forwardPaths = fPath.getPaths();
     console.log(forwardPaths)
     let masonCalculator = new MasonCalculator(fPath, loops)
@@ -242,9 +240,30 @@ export class homecomponent implements OnInit {
     let result = "Forward Paths:\n"
     for(let i = 0; i < forwardPaths.length; i++)
     {
-      let temp = "path " + String(i - 1) + ": {" + forwardPaths[i].join(", ")+ "} its weigth = " + String(fPath.getPathValue(forwardPaths[i]))
+      let temp = "path " + String(i + 1) + ": {" + forwardPaths[i].join(", ")+ "} its weigth = " + String(fPath.getPathValue(forwardPaths[i]))
       result += "\t" + temp + "\n"
     }
+   result=result +  "Loops :\n"
+   let loopToBePrinted=loops.loops
+   console.log(loopToBePrinted)
+   for(let i = 0; i < loopToBePrinted.length; i++)
+   {
+     let temp = "loop " + String(i + 1) + ": {" + loopToBePrinted[i].join(", ")+ "} its weigth = " + String(fPath.getPathValue(loops.loops[i]))
+     result += "\t" + temp + "\n"
+   }
+   result=result +  "non Touched Loops :\n"
+   let nonTouchedToBePrinted=loops.nonTouchedloop
+   console.log(loopToBePrinted)
+   for(let i = 0; i < nonTouchedToBePrinted.length; i++)
+   {
+     let tempArr=nonTouchedToBePrinted[i]
+     result=result+"non touched set of loops " + String(i + 1) + ": {"
+     for(let j=0;j<tempArr.length;j++){
+     let temp = nonTouchedToBePrinted[i][j].join(", ")+" "
+     result += "loop number "+(j+1)+" = [" + temp+"]\n" 
+    }
+     result+= "}"
+   }
     console.log(result)
   }
   constructor() {
