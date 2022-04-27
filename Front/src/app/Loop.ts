@@ -23,7 +23,8 @@ export class Loop {
       }
     }
     this.nonTouched()
-    console.log("0                           0       "+this.loops)
+    console.log("0                           0       ")
+    console.log(this.loops)
   }
   getComplexLoop(graph:Map<String, []>, current: string, way: string[],isVisited:  Map<string, boolean>,isFinished:  Map<string, boolean>) {
     if (current.toString() == way[0]) {
@@ -48,7 +49,7 @@ export class Loop {
     way.push(current.toString());
     for (let i of graph.get(current)) {
       if (current == i&&i==way[0]) {
-        this.loops.push(current)
+        this.loops.push([current])
       } else {
           if (isFinished.get(i)) {
             continue;
