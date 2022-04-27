@@ -172,9 +172,8 @@ export class MasonCalculator {
         numerator.alphanumeric +=
           weight +
           " * " +
-          numerator.numeric.toString() +
-          " * " +
-          delta.alphanumeric.toString();
+          delta.alphanumeric.toString() +
+          numerator.numeric.toString();
       } else {
         numerator.numeric += weight * delta.numeric;
         numerator.alphanumeric += delta.alphanumeric;
@@ -194,11 +193,7 @@ export class MasonCalculator {
         if (this.alphanumeric === "") return this.numeric.toString();
         else
           return (
-            this.numeric.toString() +
-            " + " +
-            "(" +
-            this.alphanumeric.toString() +
-            ")"
+            this.numeric.toString() + "(" + this.alphanumeric.toString() + ")"
           );
       },
     };
