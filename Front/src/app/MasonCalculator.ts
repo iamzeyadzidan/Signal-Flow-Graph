@@ -10,10 +10,6 @@ import { Loop } from "./Loop";
  * The function calculates the whole mason formula.
  */
 
-/**
- * Needs to be reviewed
- */
-
 export class MasonCalculator {
   /** Paths Data */
   pathsData: path;
@@ -60,7 +56,6 @@ export class MasonCalculator {
       let weight = this.pathsData.getPathValue(this.loops[loop_index]);
       this.loopsWeights.set(loop_index, weight);
     }
-    console.warn(this.loopsWeights);
   }
 
   setPathsDeltas() {
