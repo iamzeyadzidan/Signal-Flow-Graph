@@ -51,7 +51,7 @@ export class MasonCalculator {
       let weight = this.pathsData.getPathValue(this.paths[path_index]);
       this.pathsWeights.set(path_index, weight);
     }
-    console.warn(this.pathsWeights)
+    console.warn(this.pathsWeights);
   }
 
   setLoopsWeights() {
@@ -61,7 +61,7 @@ export class MasonCalculator {
       let weight = this.pathsData.getPathValue(this.loops[loop_index]);
       this.loopsWeights.set(loop_index, weight);
     }
-    console.warn(this.loopsWeights)
+    console.warn(this.loopsWeights);
   }
 
   setPathsDeltas() {
@@ -85,12 +85,7 @@ export class MasonCalculator {
       numeric: Number(0),
       alphanumeric: String(""),
       toString() {
-        return (
-          "Numeric Part = " +
-          this.numeric.toString() +
-          " Alphanumeric Part = " +
-          this.alphanumeric.toString()
-        );
+        return this.numeric.toString() + " + " + this.alphanumeric.toString();
       },
     };
 
@@ -164,12 +159,7 @@ export class MasonCalculator {
       numeric: Number(0),
       alphanumeric: String(""),
       toString() {
-        return (
-          "Numeric Part = " +
-          this.numeric.toString() +
-          " Alphanumeric Part = " +
-          this.alphanumeric.toString()
-        );
+        return this.numeric.toString() + " + " + this.alphanumeric.toString();
       },
     };
 
@@ -205,16 +195,11 @@ export class MasonCalculator {
       numeric: Number(0),
       alphanumeric: String(""),
       toString() {
-        return (
-          "Numeric Part = " +
-          this.numeric.toString() +
-          " Alphanumeric Part = " +
-          this.alphanumeric.toString()
-        );
+        return this.numeric.toString() + " + " + this.alphanumeric.toString();
       },
     };
 
-    console.warn(this.loopsWeights)
+    console.warn(this.loopsWeights);
 
     for (let loop_index = 0; loop_index < this.loops.length; loop_index++) {
       let weight = this.loopsWeights.get(loop_index);
@@ -261,6 +246,9 @@ export class MasonCalculator {
     this.masonResult = {
       numerator: this.numerator,
       denominator: this.denominatorDelta,
+      toString() {
+        this.numerator.toString() + " + " + this.denominator.toString();
+      },
     };
   }
 }
