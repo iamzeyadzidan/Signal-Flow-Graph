@@ -18,7 +18,7 @@ export class MasonCalculator {
   /** Paths Data */
   pathsData: path;
   paths: any[][];
-  pathTouchingLoops: any[][];
+  pathTouchingLoops: Map<any, any>;
   /** Loops Data */
   loopsData: Loop;
   loops: any[][];
@@ -45,6 +45,7 @@ export class MasonCalculator {
   }
 
   setPathsWeights() {
+    this.pathsWeights = new Map<any, any>();
     let path_index = 0;
     for (path_index; path_index < this.paths.length; path_index++) {
       let weight = this.pathsData.getPathValue(this.paths[path_index]);
@@ -53,6 +54,7 @@ export class MasonCalculator {
   }
 
   setLoopsWeights() {
+    this.loopsWeights = new Map<any, any>();
     let loop_index = 0;
     for (loop_index; loop_index < this.paths.length; loop_index++) {
       let weight = this.pathsData.getPathValue(this.loops[loop_index]);
@@ -61,6 +63,9 @@ export class MasonCalculator {
   }
 
   setPathsDeltas() {
+    this.pathDeltas = new Map<any, any>();
+    this.pathTouchingLoops = new Map<any, any>();
+
     /**
      * Declaring index of a path, index of a character (or number) in a path,
      * and index of a loop.
@@ -94,7 +99,7 @@ export class MasonCalculator {
             this.loops[loop_index].includes(this.paths[path_index][c_index])
           ) {
             flag = true; // A loop touches the path
-            this.pathTouchingLoops.push(this.loops[loop_index]);
+            this.pathTouchingLoops.set(path_index, this.loops[loop_index]);
             break;
           }
         }
