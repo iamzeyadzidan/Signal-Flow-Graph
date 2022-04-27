@@ -290,7 +290,7 @@ export class homecomponent implements OnInit {
     result += masonCalculator.denominatorDelta.toString() + "\n";
     result += "\nResult:\n";
     result += masonCalculator.masonResult.toString() + "\n";
-    
+    console.log(result)
     alert(result);
   }
   constructor() {
