@@ -70,7 +70,7 @@ export class path {
     let v: string;
     if (path.length == 1) {
       let temp = path[0] + path[0];
-      return Number(this.edgesVal.get(temp));
+      return this.edgesVal.get(temp);
     }
     u = path[0];
     v = path[1];
