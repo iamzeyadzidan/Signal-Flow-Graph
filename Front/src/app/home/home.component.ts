@@ -9,6 +9,7 @@ import Machine from "./Machine";
 import Factory from "./Factory";
 import { Loop } from "../loop";
 import { path } from "../path";
+import { MasonCalculator } from "../MasonCalculator";
 
 @Component({
   selector: "home",
@@ -232,6 +233,10 @@ export class homecomponent implements OnInit {
     loops.getAllLoop(fPath.adjList)
     //printing forward paths
     console.log(fPath.getPaths())
+
+    let masonCalculator = new MasonCalculator(fPath, loops)
+    masonCalculator.calculateUsingMasonFormula();
+    console.log("Result = " + masonCalculator.masonResult);
   }
   constructor() {
     this.m = 0;
