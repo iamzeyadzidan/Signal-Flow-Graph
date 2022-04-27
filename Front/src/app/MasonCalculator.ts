@@ -51,15 +51,17 @@ export class MasonCalculator {
       let weight = this.pathsData.getPathValue(this.paths[path_index]);
       this.pathsWeights.set(path_index, weight);
     }
+    console.warn(this.pathsWeights)
   }
 
   setLoopsWeights() {
     this.loopsWeights = new Map<any, any>();
     let loop_index = 0;
-    for (loop_index; loop_index < this.paths.length; loop_index++) {
+    for (loop_index; loop_index < this.loops.length; loop_index++) {
       let weight = this.pathsData.getPathValue(this.loops[loop_index]);
       this.loopsWeights.set(loop_index, weight);
     }
+    console.warn(this.loopsWeights)
   }
 
   setPathsDeltas() {
@@ -82,6 +84,14 @@ export class MasonCalculator {
     let delta = {
       numeric: Number(0),
       alphanumeric: String(""),
+      toString() {
+        return (
+          "Numeric Part = " +
+          this.numeric.toString() +
+          " Alphanumeric Part = " +
+          this.alphanumeric.toString()
+        );
+      },
     };
 
     /**
@@ -153,22 +163,35 @@ export class MasonCalculator {
     let numerator = {
       numeric: Number(0),
       alphanumeric: String(""),
+      toString() {
+        return (
+          "Numeric Part = " +
+          this.numeric.toString() +
+          " Alphanumeric Part = " +
+          this.alphanumeric.toString()
+        );
+      },
     };
 
     for (pathIndex = 0; pathIndex < this.paths.length; pathIndex++) {
-      let weight = this.pathsWeights[pathIndex];
+      let weight = this.pathsWeights.get(pathIndex);
       let delta = this.pathDeltas.get(pathIndex);
 
       /**
        * If weight or delta is alphanumeric, we treat both as alphanumeric,
        * else, we treat them as numbers.
        */
+      console.warn(
+        "weight = " + weight.toString() + " delta = " + delta.toString()
+      );
+      // alphanum exists or not
       if (isNaN(Number(weight))) {
-        numerator.alphanumeric += String(weight) + " * " + String(delta);
-      } else if (isNaN(Number(delta))) {
-        numerator.alphanumeric += String(weight) + " * " + String(delta);
+        numerator.numeric += delta.numeric;
+        numerator.alphanumeric +=
+          weight + " * " + " * " + delta.alphanumeric.toString();
       } else {
-        numerator.numeric += weight * delta;
+        numerator.numeric += weight * delta.numeric;
+        numerator.alphanumeric += delta.alphanumeric;
       }
     }
 
@@ -181,7 +204,17 @@ export class MasonCalculator {
     let delta = {
       numeric: Number(0),
       alphanumeric: String(""),
+      toString() {
+        return (
+          "Numeric Part = " +
+          this.numeric.toString() +
+          " Alphanumeric Part = " +
+          this.alphanumeric.toString()
+        );
+      },
     };
+
+    console.warn(this.loopsWeights)
 
     for (let loop_index = 0; loop_index < this.loops.length; loop_index++) {
       let weight = this.loopsWeights.get(loop_index);
