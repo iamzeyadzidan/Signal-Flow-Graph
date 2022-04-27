@@ -110,6 +110,7 @@ export class Loop {
             continue;
           }
           if (path.indexOf(this.loops[j][k]) > -1) {
+            console.log(allPossibleCombination.splice(i,1))
             i--;
             flag = true;
             break;

@@ -170,9 +170,9 @@ export class homecomponent implements OnInit {
       }
     }
     console.log(fPath.adjList)
-    // lloo.getAllLoop(fPath.adjList);
-    // lloo.nonTouched();
-    // console.log(lloo.loops);
+    lloo.getAllLoop(fPath.adjList);
+    lloo.nonTouched();
+    console.log(lloo.nonTouchedloop);
     // fPath.printAllPaths("0", "3");
     // let hhh = fPath.getPaths();
     // console.log(hhh);
